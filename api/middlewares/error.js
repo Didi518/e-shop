@@ -27,7 +27,7 @@ module.exports = (err, req, res, next) => {
     const message = `Votre url a expiré. Merci de réessayer plus tard`;
     const err = new ErrorHandler(message, 400);
   }
-  res.status(err, statusCode).json({
+  res.status(err.statusCode).json({
     success: false,
     message: err.message,
   });
