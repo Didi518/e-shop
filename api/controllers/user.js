@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/sendMail');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwt');
+const { isAuthenticated } = require('../middlewares/auth');
 
 router.post('/create-user', upload.single('file'), async (req, res, next) => {
   try {
@@ -87,6 +88,51 @@ router.post(
         password,
       });
       sendToken(user, 201, res);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// connexion d'un compte
+router.post(
+  '/login-user',
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        return next(
+          new ErrorHandler('Merci de compléter tous les champs', 400)
+        );
+      }
+      const user = await User.findOne({ email }).select('+password');
+      if (!user) {
+        return next(new ErrorHandler("Ce compte n'existe pas"));
+      }
+      const isValidPassword = await user.comparePassword(password);
+      if (!isValidPassword) {
+        return next(
+          new ErrorHandler('Merci de renseigner correctement les champs', 400)
+        );
+      }
+      sendToken(user, 201, res);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// récupérer l'utilisateur
+router.get(
+  '/get-user',
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return next(new ErrorHandler("Ce compte n'existe pas"));
+      }
+      res.status(200).json({ success: true, user });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
