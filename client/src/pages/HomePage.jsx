@@ -1,4 +1,5 @@
 import React from 'react';
+import Categories from '../components/Route/Categories/Categories';
 import Header from '../components/Layout/Header';
 import Hero from '../components/Route/Hero/Hero';
 
@@ -7,6 +8,7 @@ const HomePage = () => {
     <div>
       <Header activeHeading={1} />
       <Hero />
+      <Categories />
     </div>
   );
 };
