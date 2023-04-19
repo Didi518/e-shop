@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/styles';
+import styles from '../../../styles/styles';
 import EventCard from './EventCard';
 
 const Events = () => {
@@ -7,7 +7,7 @@ const Events = () => {
     <div>
       <div className={`${styles.section}`}>
         <div className={`${styles.heading}`}>
-          <h1>Evènements Populaires</h1>
+          <h1>Ventes Flash</h1>
         </div>
         <div className="w-full grid">
           <EventCard />

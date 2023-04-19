@@ -593,21 +593,21 @@ export const productData = [
 
 export const footerProductLinks = [
   {
-    name: 'About us',
-    link: '/about',
+    name: 'Présentation',
+    link: '/presentation',
   },
   {
-    name: 'Careers',
-    link: '/carrers',
+    name: 'Nous rejoindre',
+    link: '/recrutement',
   },
   {
-    name: 'Store Locations',
+    name: 'Nos Magazins',
   },
   {
-    name: 'Our Blog',
+    name: 'Notre Blog',
   },
   {
-    name: 'Reviews',
+    name: 'Avis',
   },
 ];
 
